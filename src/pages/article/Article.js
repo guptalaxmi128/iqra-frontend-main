@@ -47,7 +47,6 @@ const Article = () => {
     const [value, setValue] = useState(0);
     console.log("article",articles)
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
