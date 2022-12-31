@@ -3,6 +3,7 @@ import * as api from '../../api/index';
 
 export const addEditorial = (editorial) => async (dispatch) => {
     try {
+        console.log(editorial)
         const { data } = await api.addEditorial(editorial);
         dispatch({ type: ADD_EDITORIAL, payload: data });
     } catch (error) {

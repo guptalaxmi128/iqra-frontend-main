@@ -24,6 +24,7 @@ import { addTeacher } from 'actions/teacher/teacher'
 const NewTeacher = (props) => {
     const { teachers } = props;
     const [teachersTable, setTeachersTable] = useState(teachers);
+  
 
     const subjectArray = (useSelector((state) => state.subject.subjects));
     console.log(subjectArray);
@@ -46,10 +47,12 @@ const NewTeacher = (props) => {
 
 
     const [teacher, setTeacher] = useState({
-        teachername: '',
-        emailid: '',
+        teacherName: '',
+        emailId: '',
         phone: '',
-        subjects: ''
+        subjects: '',
+        password:'',
+        confirmPassword:'',
     });
 
     const [image, setImage] = useState();
@@ -80,19 +83,23 @@ const NewTeacher = (props) => {
     const handleSubmit = () => {
         try {
             const formData = new FormData();
-            formData.append('teachername', teacher.teachername);
-            formData.append('emailid', teacher.emailid);
+            formData.append('teachername', teacher.teacherName);
+            formData.append('emailid', teacher.emailId);
             formData.append('phone', teacher.phone);
+            formData.append('password',teacher.password);
+            formData.append('confirmPassword',teacher.confirmPassword)
             formData.append('subjects', subjects);
             formData.append('image', image);
             console.log(formData);
             dispatch(addTeacher(formData));
             setTeachersTable([...teachersTable, formData]);
             setTeacher({
-                teachername: '',
-                emailid: '',
+                teacherName: '',
+                emailId: '',
                 phone: '',
-                subjects: ''
+                subjects: '',
+                password:'',
+                confirmPassword:'',
             });
             setImage();
             alert('teacher submitted successfully');
@@ -100,7 +107,8 @@ const NewTeacher = (props) => {
             console.log(error);
         }
     };
-    
+    // console.log(image);
+    // console.log(teachersTable)
     return (
         <>  
              <form onSubmit={handleSubmit}>
@@ -111,19 +119,41 @@ const NewTeacher = (props) => {
                     fullWidth
                     sx={{ mr: { sm: 1 } }}
                     type="text"
-                    name="teachername"
-                    value={teacher.teachername}
+                    name="teacherName"
+                    value={teacher.teacherName}
                     onChange={handleChange}
                 />
-                {/* <Box sx={{ width: '100%', ml: {sm:1} }} /> */}
                 <TextField
                     label="EmailId"
                     variant="outlined"
                     fullWidth
                     sx={{ mr: { sm: 1 } }}
                     type="email"
-                    name="emailid"
-                    value={teacher.emailid}
+                    name="emailId"
+                    value={teacher.emailId}
+                    onChange={handleChange}
+                />
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, mt: 2, mb: 2 }}>
+                <TextField
+                    label="Password"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mr: { sm: 1 } }}
+                    type="password"
+                    name="password"
+                    value={teacher.password}
+                    onChange={handleChange}
+                />
+ 
+                <TextField
+                    label="Confirm Password"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mr: { sm: 1 } }}
+                    type="password"
+                    name="confirmPassword"
+                    value={teacher.confirmPassword}
                     onChange={handleChange}
                 />
             </Box>

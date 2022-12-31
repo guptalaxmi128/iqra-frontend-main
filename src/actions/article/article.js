@@ -5,7 +5,7 @@ export const addArticle = (article) => async (dispatch) => {
     try {
         console.log(article);
         const { data } = await api.addArticle(article);
-        dispatch({ type: ADD_ARTICLE, payload: article });
+        dispatch({ type: ADD_ARTICLE, payload: data });
     } catch (error) {
         console.log(error);
     }

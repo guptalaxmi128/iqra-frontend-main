@@ -1,7 +1,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 
 const initialState = {
-    editorial: [],
+    editorials: [],
     state: 'idle',
     error: null
 };
@@ -11,12 +11,12 @@ export const editorialReducer = (state = initialState, action) => {
         case actionTypes.ADD_EDITORIAL:
             return {
                 ...state,
-                editorial: action.payload.editorial
+                editorials: action.payload.editorials
             };
         case actionTypes.GET_EDITORIAL:
             return {
                 ...state,
-                editorial: action.payload.editorial
+                editorials: action.payload.editorials
             };
         default:
             return state;

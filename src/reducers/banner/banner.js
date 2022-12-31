@@ -1,7 +1,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 
 const initialState = {
-    banner: [],
+    banners: [],
     state: 'idle',
     error: null,
 };
@@ -11,12 +11,12 @@ const bannerReducer = (state = initialState, action) => {
         case actionTypes.GET_BANNER:
             return {
                 ...state,
-                banner: action.payload,
+                banners: action.payload,
             };
-        case actionTypes.ADD_TEACHER:
+        case actionTypes.ADD_BANNER:
             return {
                 ...state,
-                banner: [...state.banner, action.payload],
+                banners: [...state.banners, action.payload],
             };
         default:
             return state;

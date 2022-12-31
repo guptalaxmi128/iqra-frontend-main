@@ -3,6 +3,7 @@ import * as api from "api/index.js";
 
 export const addImportantIssues = (importantIssues) => async (dispatch) => {
     try {
+        console.log(importantIssues)
         const { data } = await api.addImportantIssue(importantIssues);
         dispatch({ type: ADD_IMPORTANT_ISSUES, payload: data });
     } catch (error) {

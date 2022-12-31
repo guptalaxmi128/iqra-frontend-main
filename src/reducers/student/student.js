@@ -1,7 +1,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 
 const initialState = {
-    student: [],
+    students: [],
     state: 'idle',
     error: null,
 };
@@ -11,12 +11,12 @@ const studentReducer = (state = initialState, action) => {
         case actionTypes.GET_STUDENT:
             return {
                 ...state,
-                student: action.payload,
+                students: action.payload,
             };
         case actionTypes.ADD_STUDENT:
             return {
                 ...state,
-                student: [...state.student, action.payload],
+                students: [...state.students, action.payload],
             };
         default:
             return state;

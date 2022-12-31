@@ -21,6 +21,9 @@ import {
     InputLabel,
     FormControl
 } from '@mui/material';
+import Scrollbar from '../../../components/Scrollbar';
+import SearchNotFound from '../../../components/SearchNotFound';
+import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../components/user';
 
 
 const TABLE_HEAD = [{ id: 'teacherName', label: 'Teacher Name', alignRight: true },
@@ -30,10 +33,6 @@ const TABLE_HEAD = [{ id: 'teacherName', label: 'Teacher Name', alignRight: true
 ];
 
 // ----------------------------------------------------------------------
-
-
-
-
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -60,79 +59,80 @@ function applySortFilter(array, comparator, query) {
         return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
     }
     return stabilizedThis.map((el) => el[0]);
+
 }
+
+
+
 
 const AllTeacher = (props) => {
     const { teachers} =props;
     const [teachersTable, setTeachersTable] = useState(teachers);
+//  console.log('teachertable',teachersTable)
+const [page, setPage] = useState(0);
 
+const [order, setOrder] = useState('asc');
 
-   
-   
-    const [page, setPage] = useState(0);
+const [selected, setSelected] = useState([]);
 
-    const [order, setOrder] = useState('asc');
+const [orderBy, setOrderBy] = useState('name');
 
-    const [selected, setSelected] = useState([]);
+const [filterName, setFilterName] = useState('');
 
-    const [orderBy, setOrderBy] = useState('name');
+const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const [filterName, setFilterName] = useState('');
+const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+};
 
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+        const newSelecteds = teachersTable.map((n) => n.id);
+        setSelected(newSelecteds);
+        return;
+    }
+    setSelected([]);
+};
 
-    const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-    };
+const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
+};
 
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = teachersTable.map((n) => n.id);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
+const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+};
 
-    const handleClick = (event, id) => {
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = [];
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-        }
-        setSelected(newSelected);
-    };
+const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+};
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+const handleFilterByName = (event) => {
+    setFilterName(event.target.value);
+};
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - teachersTable.length) : 0;
 
-    const handleFilterByName = (event) => {
-        setFilterName(event.target.value);
-    };
+const filteredUsers = applySortFilter(teachersTable, getComparator(order, orderBy), filterName);
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - categoriesTable.length) : 0;
+const isUserNotFound = filteredUsers.length === 0;
 
-    const filteredUsers = applySortFilter(teachersTable, getComparator(order, orderBy), filterName);
-
-    const isUserNotFound = filteredUsers.length === 0;
-
-    return (
-        <>
-            <Box sx={{ mt: 2 }}>
+return(
+    <>
+  <Box sx={{mt:2}}>
                 <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
                 <Scrollbar>
@@ -149,7 +149,8 @@ const AllTeacher = (props) => {
                             />
                             <TableBody>
                                 {teachersTable.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((custInfo) => {
-                                    const { id, teachername,emailid,phone,subjects } = custInfo;
+                                    const { id, teacherName,emailId,phone,subjects } = custInfo;
+                                    console.log("Allteachertable",custInfo)
                                     const isItemSelected = selected.indexOf(id) !== -1;
 
                                     return (
@@ -167,30 +168,24 @@ const AllTeacher = (props) => {
                                             <TableCell align="center">
                                                 <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {teachername}
+                                                        {teacherName}
                                                     </Typography>
                                                 </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {emailid}
+                                                        {emailId}
                                                     </Typography>
-                                                </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
                                                         {phone}
                                                     </Typography>
-                                                </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
                                                         {subjects}
                                                     </Typography>
-                                                </Stack>
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -218,15 +213,19 @@ const AllTeacher = (props) => {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={categoriesTable.length}
+                    count={teachersTable.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Box>
-        </>
-    );
+    </>
+)
+   
+   
+  
+        
 };
 
 export default AllTeacher;

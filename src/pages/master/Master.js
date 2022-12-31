@@ -50,7 +50,7 @@ const Master = () => {
     const languages = useSelector(state => state.language.languages);
     const [value, setValue] = useState(0);
 
-    // console.log("mastermain",categories)
+    console.log("mastermain",categories)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

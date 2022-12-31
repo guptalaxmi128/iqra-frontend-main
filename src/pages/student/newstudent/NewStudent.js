@@ -25,19 +25,22 @@ import { addStudent } from 'actions/student/student';
 const NewStudent = (props) => {
     const { students } = props;
     const [studentsTable, setStudentsTable] = useState(students);
+    console.log("studentTable",studentsTable)
     const [value, setValue] = React.useState(dayjs('2014-08-18T21:11:54'));
     // const [startDate, setStartDate] = useState(new Date());
     const handleDateChange = (newValue) => {
         setValue(newValue);
     };
 
+    const [image, setImage] = useState();
+
     const [student, setStudent] = useState({
-        studentname: '',
-        emailid:'',
+        studentName: '',
+        emailId:'',
         phone:'',
         medium:'',
-        totalattempt:'',
-        optionalsubjects:'',
+        totalAttempt:'',
+        optionalSubjects:'',
 
     });
 
@@ -46,12 +49,12 @@ const NewStudent = (props) => {
     };
 
     const handleTotalAttemptChange = (event) => {
-        setStudent({ ...student, totalattempt: event.target.value });
+        setStudent({ ...student, totalAttempt: event.target.value });
     };
 
 
     const handleOptionalSubjectsChange = (event) => {
-        setStudent({ ...student, optionalsubjects: event.target.value });
+        setStudent({ ...student, optionalSubjects: event.target.value });
     };
     // const handleChange = ({ currentTarget: input }) => {
     //     setNewStudent({
@@ -68,23 +71,24 @@ const NewStudent = (props) => {
     const handleSubmit = () => {
         try {
             const formData = new FormData();
-            formData.append('studentname', student.studentname);
-            formData.append('emailid', student.emailid);
+            formData.append('studentname', student.studentName);
+            formData.append('emailid', student.emailId);
             formData.append('phone', student.phone);
             formData.append('medium',student.medium);
-            formData.append('totalattempt',student.totalattempt)
-            formData.append('optionalsubjects', student.optionalsubjects);
+            formData.append('totalattempt',student.totalAttempt)
+            formData.append('optionalsubjects', student.optionalSubjects);
+            formData.append('date',value)
             formData.append('image', image);
             console.log(formData);
             dispatch(addStudent(formData));
             setStudentsTable([...studentsTable, formData]);
             setStudent({
-                teachername: '',
-                emailid: '',
+                teacherName: '',
+                emailId: '',
                 phone: '',
                 medium:'',
-                totalattempt:'',
-                optionalsubjects: ''
+                totalAttempt:'',
+                optionalSubjects: ''
             });
             setValue();
             setImage();
@@ -105,7 +109,7 @@ const NewStudent = (props) => {
                         sx={{ mr: { sm: 1 } }}
                         type="text"
                         name="studentname"
-                        value={student.studentname}
+                        value={student.studentName}
                         onChange={handleChange}
                     />
                     <TextField
@@ -115,7 +119,7 @@ const NewStudent = (props) => {
                         sx={{mt:{xs:2,sm:0}}}
                         type="email"
                         name="emailid"
-                        value={student.emailid}
+                        value={student.emailId}
                         onChange={handleChange}
                     />
                 </Box>
@@ -159,6 +163,7 @@ const NewStudent = (props) => {
                             <MenuItem value="4">3</MenuItem>
                             <MenuItem value="5">4</MenuItem>
                             <MenuItem value="6">5</MenuItem>
+                            <MenuItem value="7">6</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl fullWidth >
@@ -173,13 +178,12 @@ const NewStudent = (props) => {
                             value={student.optionalsubjects}
                             onChange={handleOptionalSubjectsChange}
                         >
-                            <MenuItem selected>Select No</MenuItem>
-                            <MenuItem value="1">0</MenuItem>
-                            <MenuItem value="2">1</MenuItem>
-                            <MenuItem value="3">2</MenuItem>
-                            <MenuItem value="4">3</MenuItem>
-                            <MenuItem value="5">4</MenuItem>
-                            <MenuItem value="6">5</MenuItem>
+                            <MenuItem selected>Select Subject</MenuItem>
+                            <MenuItem value="1">Hindi</MenuItem>
+                            <MenuItem value="2">English</MenuItem>
+                            <MenuItem value="3">Maths</MenuItem>
+                            <MenuItem value="4">General Studies</MenuItem>
+                           
                         </Select>
                     </FormControl>
                     </Box>

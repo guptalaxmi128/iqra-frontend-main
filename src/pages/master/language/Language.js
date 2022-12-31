@@ -70,6 +70,7 @@ const Language = (props) => {
     const { languages } = props;
     // console.log("language",props)
     const [languagesTable, setLanguagesTable] = useState(languages);
+    console.log('language',languagesTable)
 
     const [page, setPage] = useState(0);
 
@@ -201,6 +202,7 @@ const Language = (props) => {
                             <TableBody>
                                 {languagesTable.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((custInfo) => {
                                     const { id, language } = custInfo;
+                                    console.log("language",custInfo)
                                     const isItemSelected = selected.indexOf(id) !== -1;
 
                                     return (

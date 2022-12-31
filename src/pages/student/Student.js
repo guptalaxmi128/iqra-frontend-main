@@ -44,6 +44,7 @@ const Teacher = () => {
     // const categories = useSelector(state => state.category.categories);
     const students=useSelector(state=>state.student.students);
     const [value, setValue] = useState(0);
+    // console.log("students",students)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -71,8 +72,8 @@ const Teacher = () => {
         variant="scrollable"
         aria-label="scrollable auto tabs example"
       >
-        <Tab label="NewStudent" {...a11yProps(0)} />
-        <Tab label="AllStudent" {...a11yProps(1)}/>
+        <Tab label="New Student" {...a11yProps(0)} />
+        <Tab label="All Student" {...a11yProps(1)}/>
       </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

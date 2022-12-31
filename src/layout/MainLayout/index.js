@@ -22,7 +22,7 @@ import { getMediums } from 'actions/master/medium';
 import { getLevels } from 'actions/master/level';
 import { getLanguages } from 'actions/master/language';
 import { getCourses } from 'actions/course/course';
-import { getTeacher } from 'actions/teacher/teacher';
+// import { getTeacher } from 'actions/teacher/teacher';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -38,7 +38,7 @@ const MainLayout = () => {
             await dispatch(getLevels());
             await dispatch(getLanguages());
             await dispatch(getCourses());
-            await dispatch(getTeacher());
+            // await dispatch(getTeacher());
         };
         getReduxData();
     }, [dispatch]);

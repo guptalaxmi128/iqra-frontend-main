@@ -65,6 +65,7 @@ function applySortFilter(array, comparator, query) {
 const Category = (props) => {
     const { categories } = props;
     const [categoriesTable, setCategoriesTable] = useState(categories);
+    console.log("category",categoriesTable)
 
     const [page, setPage] = useState(0);
 

@@ -28,7 +28,7 @@ import { addBanner} from '../../actions/banner/banner';
 // project import
 import MainCard from 'components/MainCard';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Scrollbar from '../../components/Scrollbar';
 import SearchNotFound from '../../components/SearchNotFound';
@@ -73,10 +73,12 @@ function applySortFilter(array, comparator, query) {
 
 
 
-const Banner = (props) => {
+const Banner = () => {
   
-    const {banners} =props;
-    const [bannerTable,setBannerTable]=useState(banners);
+    const banners=useSelector((state)=>state.banner.banners)
+    const [bannersTable,setbannersTable]=useState(banners);
+    console.log("banner",bannersTable)
+    
 
     const [page, setPage] = useState(0);
 
@@ -133,9 +135,9 @@ const Banner = (props) => {
         setFilterName(event.target.value);
     };
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - bannerTable.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - bannersTable.length) : 0;
 
-    const filteredUsers = applySortFilter(bannerTable, getComparator(order, orderBy), filterName);
+    const filteredUsers = applySortFilter(bannersTable, getComparator(order, orderBy), filterName);
 
     const isUserNotFound = filteredUsers.length === 0;
 
@@ -157,7 +159,7 @@ const Banner = (props) => {
             formData.append('bannerimage', image);
             console.log(formData);
             await dispatch(addBanner(formData));
-            setBannerTable([...bannerTable,formData]);
+            setbannersTable([...bannersTable,formData]);
             setImage('');
             alert('banner submitted successfully');
         } catch (error) {
@@ -200,14 +202,15 @@ const Banner = (props) => {
                                 order={order}
                                 orderBy={orderBy}
                                 headLabel={TABLE_HEAD}
-                                rowCount={bannerTable.length}
+                                rowCount={bannersTable.length}
                                 numSelected={selected.length}
                                 onRequestSort={handleRequestSort}
                                 onSelectAllClick={handleSelectAllClick}
                             />
                             <TableBody>
-                                {bannerTable.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((custInfo) => {
+                                {bannersTable.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((custInfo) => {
                                     const { id, image } = custInfo;
+                                    console.log("bannerInfo",custInfo)
                                     const isItemSelected = selected.indexOf(id) !== -1;
 
                                     return (
@@ -262,7 +265,7 @@ const Banner = (props) => {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={languagesTable.length}
+                    count={bannersTable.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

@@ -21,6 +21,9 @@ import {
     InputLabel,
     FormControl
 } from '@mui/material';
+import Scrollbar from '../../../components/Scrollbar';
+import SearchNotFound from '../../../components/SearchNotFound';
+import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../components/user';
 
 
 const TABLE_HEAD = [{ id: 'studentName', label: 'Student Name', alignRight: true },
@@ -126,7 +129,7 @@ const AllStudent = (props) => {
         setFilterName(event.target.value);
     };
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - categoriesTable.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - studentsTable.length) : 0;
 
     const filteredUsers = applySortFilter(studentsTable, getComparator(order, orderBy), filterName);
 
@@ -151,7 +154,7 @@ const AllStudent = (props) => {
                             />
                             <TableBody>
                                 {studentsTable.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((custInfo) => {
-                                    const { id, studentname,emailid,phone,optionalSubjects,medium } = custInfo;
+                                    const { id, studentName,emailId,phone,optionalSubjects,medium } = custInfo;
                                     const isItemSelected = selected.indexOf(id) !== -1;
 
                                     return (
@@ -167,39 +170,31 @@ const AllStudent = (props) => {
                                                 <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {studentname}
+                                                        {studentName}
                                                     </Typography>
-                                                </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {emailid}
+                                                        {emailId}
                                                     </Typography>
-                                                </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
+                                               
                                                     <Typography variant="subtitle2" noWrap>
                                                         {phone}
                                                     </Typography>
-                                                </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
                                                         {optionalSubjects}
                                                     </Typography>
-                                                </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
                                                         {medium}
                                                     </Typography>
-                                                </Stack>
+
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -227,7 +222,7 @@ const AllStudent = (props) => {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={categoriesTable.length}
+                    count={studentsTable.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
