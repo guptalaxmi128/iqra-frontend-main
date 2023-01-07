@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // baseURL: 'http://localhost:5000/api//master',
+    baseURL: 'http://localhost:5000/api/',
     // baseURL: 'https://iqra-twfr.onrender.com/api//master'
-    baseURL :'https://iqra-twfr.onrender.com/api'
+    // baseURL :'https://iqra-twfr.onrender.com/api'
 });
 
 api.interceptors.request.use((req) => {
@@ -20,7 +20,7 @@ api.interceptors.request.use((req) => {
 export const addArticle = (articleInfo) => api.post(`/master/add-articles`, articleInfo);
 export const getArticle = () => api.get(`/master/articles`);
 
-export const addEditorial = (editorialInfo) => api.post(`/master/add-editorials`, editorialInfo);
+export const addEditorial = (editorialInfo) => api.post(`/master/add-editorials`,editorialInfo);
 export const getEditorial = () => api.get(`/master/editorials`);
 
 export const signup = (userInfo) => api.post(`/master/signupAdmin`, userInfo);
@@ -57,10 +57,10 @@ export const addUploadcontent = (uploadcontentInfo) => api.post(`/master/add-con
 export const getUploadcontent = () => api.get(`/master/contents`);
 
 export const addTeacher = (teacherInfo)=>api.post(`/student/register-teachers`,teacherInfo);
-// export const getTeacher = () =>api.get(`/master/addTeacher`);
+export const getTeacher = () =>api.get(`/student/allTeachers`);
 
 export const addStudent = (studentInfo)=>api.post(`/student/register-students`,studentInfo);
-// export const getStudent = () =>api.get(`/master/addStudent`);
+export const getStudent = () =>api.get(`/student/allStudents`);
 
 export const addBanner=(bannerInfo)=>api.post('/master/add-banners',bannerInfo);
 export const getBanner=()=>api.get('/master/banners');

@@ -40,8 +40,8 @@ function TabPanel(props) {
     };
   }
 
-const Teacher = () => {
-    // const categories = useSelector(state => state.category.categories);
+const Student = () => {
+   
     const students=useSelector(state=>state.student.students);
     const [value, setValue] = useState(0);
     // console.log("students",students)
@@ -82,17 +82,8 @@ const Teacher = () => {
       <TabPanel value={value} index={1}>
         <AllStudent students={students} />
       </TabPanel>
-      {/* <TabPanel value={value} index={2}>
-        <Medium mediums={mediums} />
-      </TabPanel>
-        <TabPanel value={value} index={3}>
-         <Level levels={levels} />
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          <Language languages={languages} />
-        </TabPanel> */}
     </Box> 
   )
 }
 
-export default Teacher;
+export default Student;

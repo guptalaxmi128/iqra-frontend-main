@@ -25,22 +25,22 @@ import { addStudent } from 'actions/student/student';
 const NewStudent = (props) => {
     const { students } = props;
     const [studentsTable, setStudentsTable] = useState(students);
-    console.log("studentTable",studentsTable)
+    // console.log("studentTable",studentsTable)
+
     const [value, setValue] = React.useState(dayjs('2014-08-18T21:11:54'));
     // const [startDate, setStartDate] = useState(new Date());
     const handleDateChange = (newValue) => {
         setValue(newValue);
     };
 
-    const [image, setImage] = useState();
 
     const [student, setStudent] = useState({
-        studentName: '',
-        emailId:'',
-        phone:'',
+        name: '',
+        email:'',
+        contactNumber:'',
         medium:'',
         totalAttempt:'',
-        optionalSubjects:'',
+        optSubject:'', 
 
     });
 
@@ -54,7 +54,7 @@ const NewStudent = (props) => {
 
 
     const handleOptionalSubjectsChange = (event) => {
-        setStudent({ ...student, optionalSubjects: event.target.value });
+        setStudent({ ...student, optSubject: event.target.value });
     };
     // const handleChange = ({ currentTarget: input }) => {
     //     setNewStudent({
@@ -70,28 +70,27 @@ const NewStudent = (props) => {
 
     const handleSubmit = () => {
         try {
+            console.log(student)
             const formData = new FormData();
-            formData.append('studentname', student.studentName);
-            formData.append('emailid', student.emailId);
-            formData.append('phone', student.phone);
+            formData.append('name', student.name);
+            formData.append('email', student.email);
+            formData.append('contactNumber', student.contactNumber);
             formData.append('medium',student.medium);
             formData.append('totalattempt',student.totalAttempt)
-            formData.append('optionalsubjects', student.optionalSubjects);
+            formData.append('optSubject', student.optSubject);
             formData.append('date',value)
-            formData.append('image', image);
-            console.log(formData);
+            // console.log(formData);
             dispatch(addStudent(formData));
             setStudentsTable([...studentsTable, formData]);
             setStudent({
-                teacherName: '',
-                emailId: '',
-                phone: '',
+                name: '',
+                email: '',
+                contactNumber: '',
                 medium:'',
                 totalAttempt:'',
-                optionalSubjects: ''
+                optSubject: ''
             });
             setValue();
-            setImage();
             alert('student submitted successfully');
         } catch (error) {
             console.log(error);
@@ -108,30 +107,30 @@ const NewStudent = (props) => {
                         fullWidth
                         sx={{ mr: { sm: 1 } }}
                         type="text"
-                        name="studentname"
-                        value={student.studentName}
+                        name="name"
+                        value={student.name}
                         onChange={handleChange}
                     />
                     <TextField
-                        label="EmailId"
+                        label="Email"
                         variant="outlined"
                         fullWidth
                         sx={{mt:{xs:2,sm:0}}}
                         type="email"
-                        name="emailid"
-                        value={student.emailId}
+                        name="email"
+                        value={student.email}
                         onChange={handleChange}
                     />
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, mt: 2, mb: 2 }}>
                     <TextField
-                        label="Phone"
+                        label="Contact Number"
                         variant="outlined"
                         fullWidth
                         sx={{ mr: { sm: 1 } }}
                         type="number"
-                        name="phone"
-                        value={student.phone}
+                        name="contactNumber"
+                        value={student.contactNumber}
                         onChange={handleChange}
                     />
                     <TextField
@@ -150,10 +149,10 @@ const NewStudent = (props) => {
                         <InputLabel id="demo-simple-select-label">Total Attempt</InputLabel>
                         <Select
                             variant="outlined"
-                            name="totalattempt"
+                            name="totalAttempt"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={student.totalattempt}
+                            value={student.totalAttempt}
                             onChange={handleTotalAttemptChange}
                         >
                             <MenuItem selected>Select No</MenuItem>
@@ -172,10 +171,10 @@ const NewStudent = (props) => {
                             fullWidth
                             sx={{mt:{xs:2,sm:0}}}
                             variant="outlined"
-                            name="optionalsubjects"
+                            name="optSubject"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={student.optionalsubjects}
+                            value={student.optSubject}
                             onChange={handleOptionalSubjectsChange}
                         >
                             <MenuItem selected>Select Subject</MenuItem>

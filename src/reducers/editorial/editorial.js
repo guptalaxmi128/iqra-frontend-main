@@ -16,7 +16,7 @@ export const editorialReducer = (state = initialState, action) => {
         case actionTypes.GET_EDITORIAL:
             return {
                 ...state,
-                editorials: action.payload.editorials
+                editorials: action.payload
             };
         default:
             return state;

@@ -195,8 +195,8 @@ const AddEditorial = (props) => {
 
     const topicsArray = useSelector((state) => state.subject.subjects) || [];
     const importantIssues = useSelector((state) => state.importantIssue.importantIssues) || [];
-      console.log("important",importantIssues)
-      console.log('addeditorial',editorialsTable)
+    //   console.log("important",importantIssues)
+    //   console.log('addeditorial',editorialsTable)
 
 
     const ITEM_HEIGHT = 48;
@@ -295,7 +295,6 @@ const AddEditorial = (props) => {
 
     const handleSubmit = () => {
         try {
-         
             const formData = new FormData();
             formData.append('iTCategory',editorial.iICategory)
             formData.append('timeStamp',editorial.timeStamp);
@@ -312,6 +311,9 @@ const AddEditorial = (props) => {
             formData.append('topic', editorial.topic);
             formData.append('source',editorial.source)
             console.log(formData);
+            // for(var pair of formData.entries()) {
+            //     console.log(`${pair[0]}: ${pair[1]}`);
+            //   }
             dispatch(addEditorial(formData));
             setEditorialsTable([...editorialsTable, formData]);
             setEditorial({
@@ -542,7 +544,7 @@ const AddEditorial = (props) => {
                 <Box sx={{ width: '100%', ml: { sm: 1 } }} />
             </Box>
             <Box>
-                <Button variant="contained" color="primary" type="submit" onClick={() => handleSubmit()}>
+                <Button variant="contained" color="primary" type="submit" onClick={()=>handleSubmit()}>
                     Submit
                 </Button>
             </Box>

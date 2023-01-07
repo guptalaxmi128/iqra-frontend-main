@@ -3,8 +3,9 @@ import * as api from 'api';
 
 export const addArticle = (article) => async (dispatch) => {
     try {
-        console.log(article);
+       
         const { data } = await api.addArticle(article);
+        // console.log(data);
         dispatch({ type: ADD_ARTICLE, payload: data });
     } catch (error) {
         console.log(error);

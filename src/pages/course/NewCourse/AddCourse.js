@@ -189,7 +189,7 @@ const Tags = ({ data, handleDelete }) => {
 
 const AddCourse = (props) => {
     const { categories, levels, languages } = props;
-    console.log("addcourse",props)
+    // console.log("addcourse",props)
 
     const subjectArray = useSelector((state) => state.subject.subjects);
 
@@ -254,6 +254,7 @@ const AddCourse = (props) => {
 
     const handleSubmit = () => {
         try {
+            console.log(course)
             const formData = new FormData();
             formData.append('category', course.category);
             formData.append('courseName', course.courseName);

@@ -5,6 +5,7 @@ export const addCourse = (course) => async (dispatch) => {
     try {
         console.log(course);
         const { data } = await api.addCourse(course);
+        console.log(data);
         dispatch({ type: ADD_COURSE, payload: data });
     } catch (error) {
         console.log(error);

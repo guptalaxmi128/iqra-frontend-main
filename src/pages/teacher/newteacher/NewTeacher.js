@@ -47,19 +47,19 @@ const NewTeacher = (props) => {
 
 
     const [teacher, setTeacher] = useState({
-        teacherName: '',
-        emailId: '',
-        phone: '',
+        name: '',
+        email: '',
+        contactNumber: '',
         subjects: '',
         password:'',
         confirmPassword:'',
     });
 
-    const [image, setImage] = useState();
+    const [teacherImage, setTeacherImage] = useState();
 
     const handleImageFile = (e) => {
-      setImage(e.target.files[0], '$$$$');
-      console.log(image);
+      setTeacherImage(e.target.files[0], '$$$$');
+      console.log(teacherImage);
     };
 
 
@@ -82,26 +82,27 @@ const NewTeacher = (props) => {
 
     const handleSubmit = () => {
         try {
+            console.log(teacher)
             const formData = new FormData();
-            formData.append('teachername', teacher.teacherName);
-            formData.append('emailid', teacher.emailId);
-            formData.append('phone', teacher.phone);
+            formData.append('name', teacher.name);
+            formData.append('email', teacher.email);
+            formData.append('contactNumber', teacher.contactNumber);
             formData.append('password',teacher.password);
             formData.append('confirmPassword',teacher.confirmPassword)
             formData.append('subjects', subjects);
-            formData.append('image', image);
+            formData.append('image',  teacherImage);
             console.log(formData);
             dispatch(addTeacher(formData));
             setTeachersTable([...teachersTable, formData]);
             setTeacher({
-                teacherName: '',
-                emailId: '',
-                phone: '',
+                name: '',
+                email: '',
+                contactNumber: '',
                 subjects: '',
                 password:'',
                 confirmPassword:'',
             });
-            setImage();
+            setTeacherImage();
             alert('teacher submitted successfully');
         } catch (error) {
             console.log(error);
@@ -119,18 +120,18 @@ const NewTeacher = (props) => {
                     fullWidth
                     sx={{ mr: { sm: 1 } }}
                     type="text"
-                    name="teacherName"
-                    value={teacher.teacherName}
+                    name="name"
+                    value={teacher.name}
                     onChange={handleChange}
                 />
                 <TextField
-                    label="EmailId"
+                    label="Email"
                     variant="outlined"
                     fullWidth
                     sx={{ mr: { sm: 1 } }}
                     type="email"
-                    name="emailId"
-                    value={teacher.emailId}
+                    name="email"
+                    value={teacher.email}
                     onChange={handleChange}
                 />
             </Box>
@@ -159,13 +160,13 @@ const NewTeacher = (props) => {
             </Box>
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, mt: 2, mb: 2 }}>
                 <TextField
-                    label="Phone"
+                    label="Contact Number"
                     variant="outlined"
                     fullWidth
                     sx={{ mr: { sm: 1 } }}
                     type="number"
-                    name="phone"
-                    value={teacher.phone}
+                    name="contactNumber"
+                    value={teacher.contactNumber}
                     onChange={handleChange}
                 />
                   <Button
@@ -173,7 +174,7 @@ const NewTeacher = (props) => {
                         fullWidth
                         component="label"
                         style={{ height: '37px' }}
-                        value={image}
+                        value={teacherImage}
                         onChange={(e) => handleImageFile(e)}
                     >
                         Upload Image

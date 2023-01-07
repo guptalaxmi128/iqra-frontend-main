@@ -22,7 +22,13 @@ import { getMediums } from 'actions/master/medium';
 import { getLevels } from 'actions/master/level';
 import { getLanguages } from 'actions/master/language';
 import { getCourses } from 'actions/course/course';
-// import { getTeacher } from 'actions/teacher/teacher';
+import { getArticle } from 'actions/article/article';
+import { getImportantIssues } from 'actions/master/importantIssues';
+import { getWeeklyNews } from 'actions/master/weeklyNew';
+import { getBanner } from 'actions/banner/banner';
+import { getEditorial } from 'actions/editorial/editorial';
+import { getStudent } from 'actions/student/student';
+import { getTeacher } from 'actions/teacher/teacher';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -38,7 +44,13 @@ const MainLayout = () => {
             await dispatch(getLevels());
             await dispatch(getLanguages());
             await dispatch(getCourses());
-            // await dispatch(getTeacher());
+            await dispatch(getArticle());
+            await dispatch(getImportantIssues());
+            await dispatch(getWeeklyNews());
+            await dispatch(getBanner());
+            await dispatch(getEditorial());
+            await dispatch(getStudent());
+            await dispatch(getTeacher());
         };
         getReduxData();
     }, [dispatch]);

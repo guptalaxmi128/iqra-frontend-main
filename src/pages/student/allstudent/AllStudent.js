@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import React, { useState} from 'react';
 import {
     Box,
     Card,
@@ -21,21 +21,39 @@ import {
     InputLabel,
     FormControl
 } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import Dropdown from 'react-bootstrap/Dropdown';
+import "bootstrap/dist/css/bootstrap.min.css";
 import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../components/user';
 
 
-const TABLE_HEAD = [{ id: 'studentName', label: 'Student Name', alignRight: true },
-{ id: 'emailId', label: 'EmailId', alignRight: true },
-{ id: 'phone', label: 'Phone', alignRight: true },
-{ id: 'optionalSubjects', label: ' Optional Subjects', alignRight: true },
-{ id: 'medium', label: 'medium', alignRight: true },
+const TABLE_HEAD = [{ id: 'name', label: 'Name', alignRight: true },
+{ id: 'email', label: 'Email', alignRight: true },
+{ id: 'contactNumber', label: 'Contact Number', alignRight: true },
+{ id: 'optSubject', label: ' Optional Subjects', alignRight: true },
+{ id: 'medium', label: 'Medium', alignRight: true },
+{ id: '3dots', label: <MoreVertIcon />, alignRight: true }
 
 ];
 
 // ----------------------------------------------------------------------
-
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+        href=""
+        ref={ref}
+        onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+        }}
+    >
+        {children}
+        <MoreVertIcon />
+    </a>
+));
 
 
 
@@ -154,7 +172,7 @@ const AllStudent = (props) => {
                             />
                             <TableBody>
                                 {studentsTable.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((custInfo) => {
-                                    const { id, studentName,emailId,phone,optionalSubjects,medium } = custInfo;
+                                    const { id, name,email,contactNumber,optSubject,medium } = custInfo;
                                     const isItemSelected = selected.indexOf(id) !== -1;
 
                                     return (
@@ -170,31 +188,50 @@ const AllStudent = (props) => {
                                                 <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
                                             </TableCell>
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {studentName}
+                                                        {name}
                                                     </Typography>
+                                                    </Stack>
                                             </TableCell>
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {emailId}
+                                                        {email}
                                                     </Typography>
+                                                    </Stack>
                                             </TableCell>
                                             <TableCell align="center">
-                                               
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {phone}
+                                                        {contactNumber}
                                                     </Typography>
+                                                    </Stack>
                                             </TableCell>
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
-                                                        {optionalSubjects}
+                                                        {optSubject}
                                                     </Typography>
+                                                    </Stack>
                                             </TableCell>
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                     <Typography variant="subtitle2" noWrap>
                                                         {medium}
                                                     </Typography>
-
+                                            </Stack>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
+                                                <Dropdown>
+                                                    <Dropdown.Toggle as={CustomToggle} />
+                                                    <Dropdown.Menu size="sm" title="">
+                                                        <Dropdown.Item><EditIcon />&nbsp;&nbsp;&nbsp;  Edit</Dropdown.Item>
+                                                        <Dropdown.Item><DeleteOutlineIcon />&nbsp;&nbsp;&nbsp;  Delete</Dropdown.Item>
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
+                                                </Stack>
                                             </TableCell>
                                         </TableRow>
                                     );

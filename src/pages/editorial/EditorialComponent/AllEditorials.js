@@ -22,7 +22,10 @@ import {
     FormControl
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
 import Dropdown from 'react-bootstrap/Dropdown';
+import "bootstrap/dist/css/bootstrap.min.css";
 import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../components/user';
@@ -30,26 +33,26 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../components
 const TABLE_HEAD = [
     { id: 'sNo', label: 'SNo', alignRight: true },
     { id: 'heading', label: 'Heading', alignRight: true },
-    // { id: 'date', label: 'Date', alignRight: true },
-    // { id: 'view', label: 'View', alignRight: true },
-    // { id: '3dots', label: <MoreVertIcon />, alignRight: true }
+    { id: 'date', label: 'Date', alignRight: true },
+    { id: 'view', label: 'View', alignRight: true },
+    { id: '3dots', label: <MoreVertIcon />, alignRight: true }
 ];
 
 // ----------------------------------------------------------------------
 
-// const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-//     <a
-//         href=""
-//         ref={ref}
-//         onClick={(e) => {
-//             e.preventDefault();
-//             onClick(e);
-//         }}
-//     >
-//         {children}
-//         <MoreVertIcon />
-//     </a>
-// ));
+ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+        href=""
+        ref={ref}
+        onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+        }}
+    >
+        {children}
+        <MoreVertIcon />
+    </a>
+));
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -81,7 +84,7 @@ function applySortFilter(array, comparator, query) {
 const AllEditorials = (props) => {
     const { editorials } = props;
     const [editorialsTable, setEditorailsTable] = useState(editorials);
-    console.log('table', editorialsTable);
+    // console.log('table', editorialsTable);
     const [page, setPage] = useState(0);
 
     const [order, setOrder] = useState('asc');
@@ -161,7 +164,7 @@ const AllEditorials = (props) => {
                             />
                             <TableBody>
                                 {editorialsTable.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((custInfo) => {
-                                    const { id, heading, date } = custInfo;
+                                    const { id, heading,timeStamp } = custInfo;
                                     console.log("allEditorial",custInfo)
                                     const isItemSelected = selected.indexOf(id) !== -1;
 
@@ -178,36 +181,43 @@ const AllEditorials = (props) => {
                                                 <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
                                             </TableCell>
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                 <Typography variant="subtitle2" noWrap>
                                                     {id}
                                                 </Typography>
+                                                </Stack>
                                             </TableCell>
 
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                 <Typography variant="subtitle2" noWrap>
                                                     {heading}
                                                 </Typography>
+                                                </Stack>
                                             </TableCell>
-                                            {/* <TableCell align="center">
+                                            <TableCell align="center">
                                                 <Typography variant="subtitle2" noWrap>
-                                                    {date}
+                                                    {timeStamp}
                                                 </Typography>
                                             </TableCell>
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                 <Button variant="contained" color="primary" type="submit">
                                                     View
                                                 </Button>
+                                                </Stack>
                                             </TableCell>
                                             <TableCell align="center">
+                                            <Stack direction="row" alignItems="center" spacing={2}>
                                                 <Dropdown>
                                                     <Dropdown.Toggle as={CustomToggle} />
                                                     <Dropdown.Menu size="sm" title="">
-                                                        <Dropdown.Header>Options</Dropdown.Header>
-                                                        <Dropdown.Item>Edit</Dropdown.Item>
-                                                        <Dropdown.Item>Delete</Dropdown.Item>
+                                                        <Dropdown.Item><EditIcon />&nbsp;&nbsp;&nbsp;  Edit</Dropdown.Item>
+                                                        <Dropdown.Item><DeleteOutlineIcon />&nbsp;&nbsp;&nbsp;  Delete</Dropdown.Item>
                                                     </Dropdown.Menu>
                                                 </Dropdown>
-                                            </TableCell> */}
+                                                </Stack>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
