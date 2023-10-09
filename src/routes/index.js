@@ -8,5 +8,6 @@ import MainRoutes from './MainRoutes';
 
 export default function ThemeRoutes(props) {
     const { user } = props;
-    return useRoutes(user ? [MainRoutes] : [LoginRoutes]);
+    // return useRoutes(user ? [MainRoutes] : [LoginRoutes]);
+    return useRoutes([MainRoutes]);
 }
